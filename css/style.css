@@ -1,0 +1,30 @@
+body{
+    background-color: rgb(200, 164, 233);
+    width: 960px;
+    margin: auto;
+}
+img {
+    margin: auto;
+    width: 300px;
+    height: 300px;
+}
+h3{
+    font-size: 25px;
+    font-weight: 700;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    text-align: center;
+    background-color: black;
+    color: white;
+    padding: 25px 0px;
+}
+#images{
+    display:grid;
+    grid-template-columns: auto auto auto;
+    gap: 30px;
+}
+ul{
+    columns: 350px 2;
+    line-height: 20px;
+    font-size: 15px;
+}

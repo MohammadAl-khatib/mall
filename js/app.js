@@ -6,13 +6,15 @@ let img2 = document.getElementById('img2');
 let img3 = document.getElementById('img3');
 let list = document.getElementById('list');
 let results = document.getElementById('results');
-
 let products = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'tauntaun.jpg', 'unicorn.jpg', 'water-can.jpg', 'wine-glass.jpg'];
 let objArray = [];
 let clicks = 0;
 let clicksLimit = 5;
 let randomArray1 = [];
 let randomArray2 = [];
+let users = [];
+let signup = document.getElementById('signup');
+let signIn = document.getElementById('signIn');
 
 function CreateProduct(imgname, imgSrc, shown = 0, votes = 0) {
 
@@ -32,6 +34,12 @@ function getData() {
     } else {
         for (let i = 0; i < products.length; i++) {
             new CreateProduct(products[i].split('.')[0], products[i])
+        }
+    }
+    if (localStorage.userdata) {
+        let data = JSON.parse(localStorage.userdata);
+        for (let i = 0; i < data.length; i++) {
+            new CreateUser(data[i].userName, data[i].password)
         }
     }
 }
@@ -83,4 +91,34 @@ function resultsHandler() {
         }
         results.removeEventListener('click', resultsHandler);
     }
+}
+
+function CreateUser(userName, password) {
+    this.userName = userName;
+    this.password = password;
+    users.push(this);
+}
+
+signup.addEventListener('submit', signupHandler);
+function signupHandler(event) {
+    event.preventDefault();
+    if(event.target.userName.value && event.target.password.value){
+    let userName = event.target.userName.value;
+    let password = event.target.password.value;
+    new CreateUser(userName, password);
+    localStorage.userdata = JSON.stringify(users);
+    }else {alert('please enter valid user name and password')}
+}
+
+signIn.addEventListener('submit', signInHandler);
+function signInHandler(event) {
+    event.preventDefault();
+    let x =0;
+    for (let i=0; i < users.length; i++) {
+        if (event.target.userName.value === users[i].userName && event.target.password.value === users[i].password) {
+            alert('you are welcome');
+            x=5;
+        }
+    }
+    if (x === 0){alert('enter valid user name and password');}
 }
